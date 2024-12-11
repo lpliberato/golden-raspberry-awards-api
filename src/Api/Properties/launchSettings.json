@@ -13,7 +13,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "v1/worst-movies",
+      "launchUrl": "v1/movies/awards",
       "applicationUrl": "http://localhost:5287",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -22,7 +22,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "v1/worst-movies",
+      "launchUrl": "v1/movies/awards",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
-    [Route("v1")]
+    [Route("v1/movies")]
     [ApiController]
     public class MovieController : ControllerBase
     {
@@ -15,9 +15,19 @@ namespace Api.Controllers
                 _context = context;
         }
 
-        [Route("worst-movies")]
+        [Route("")]
         [HttpGet]
         public async Task<IActionResult> GetMovies() 
+        {
+            return Ok(await _context
+                            .Movies
+                            .AsNoTracking()
+                            .ToListAsync());
+        }
+
+        [Route("awards")]
+        [HttpGet]
+        public async Task<IActionResult> GetAwards() 
         {
             var producerPrizes = await _context.Movies
                       .Where(m => m.Winner == "yes")
