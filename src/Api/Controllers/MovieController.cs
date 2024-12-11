@@ -1,7 +1,7 @@
 ﻿using Api.Database;
-using Api.Helpers;
 using Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
@@ -19,16 +19,7 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMovies() 
         {
-            string filePath = Path.Combine(AppContext.BaseDirectory, "Database", "movielist.csv");
-            if (!System.IO.File.Exists(filePath))
-                return NotFound();
-
-            var movies = CsvReaderHelper.ReadCsv(filePath);
-
-            await _context.Movies.AddRangeAsync(movies);
-            await _context.SaveChangesAsync();
-
-            var producerPrizes = _context.Movies
+            var producerPrizes = await _context.Movies
                       .Where(m => m.Winner == "yes")
                       .OrderBy(m => m.Producers)
                       .ThenBy(m => m.Year)
@@ -38,7 +29,7 @@ namespace Api.Controllers
                           producer = g.Key,
                           prizes = g.ToList()
                       })
-                      .ToList();
+                      .ToListAsync();
 
             var intervals = producerPrizes.SelectMany(g =>
             {
